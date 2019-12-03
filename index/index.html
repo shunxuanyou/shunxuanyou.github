@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="mui.min.css">
+</head>
+<body>
+<button>支付</button>
+<script src="mui.min.js"></script>
+<script>
+    mui('button')[0].addEventListener('tap',function () {
+        var Referer='http://h5.hoyard.cn';
+        mui.ajax('https://h5.hoyard.cn:18081/webOrder/wxpayH5',{
+            data:{
+                sign: 'ea3a1ff064b3b8c84433c67cc117a83969d3729c5119f384063c213d9fb87219c75df9b4b4cdf64618fca321ed2b647d1e1c0ed20ae61e86acda18f904e105d5fcb566e38e0aa43c6f482f994fae1f3e',
+                orderIds: '40000003432o',
+                type: 1,
+                isShare: 2
+            },
+            type:'post',//HTTP请求类型
+            cache:false,
+            headers:{
+                'Referer':Referer,
+                // 'Authorization':token
+            },
+            success:function(data){
+                if(data.code===20000){
+                    if(data.code===20000){
+                        window.location.href=data.data.mweb_url+'&redirect_url=http%3a%2f%2fh5.hoyard.cn%2fh53%2forder%2ftab-top-subpage-3.html';
+                        // mweb_url=https://wx.tenpay.com/cgi-bin/mmpayweb-bin/checkmweb?prepay_id=wx08182154578726f91b85b2711401875500&package=3985934225
+                    }
+                }else {
+                    mui.toast(data.message);
+                }
+            },
+            error:function (xhr,type,error) {
+                mui.toast(error);
+            }
+        })
+    })
+</script>
+</body>
+</html>
